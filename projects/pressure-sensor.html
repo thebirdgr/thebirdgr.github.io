@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Si3N4 membrane pressure sensor | Girish Ravi</title>
+<meta name="description" content="Fabricating and characterizing silicon nitride membrane pressure sensors with NiCr strain gauges: KOH membrane geometry, thin-film resistivity, large-deflection theory against measurement.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="home" href="../index.html"><span>GR</span> Girish Ravi</a><a href="../index.html#mems">&larr; All MEMS work</a></div></nav>
+
+<header class="case"><div class="wrap">
+  <div class="eyebrow">ME 487 &middot; Fabrication and characterization</div>
+  <h1>Silicon nitride membrane pressure sensors</h1>
+  <p class="lede">A wafer of pressure sensors made in the UIUC cleanroom: a thin Si<sub>3</sub>N<sub>4</sub> membrane over a KOH-etched cavity, with NiCr strain gauges wired into a Wheatstone bridge. Four membrane sizes on one wafer let me test how geometry trades sensitivity against robustness, and where the textbook model breaks.</p>
+  <div class="meta"><span>KOH anisotropic etch</span><span>NiCr sputter + lift-off</span><span>Wheatstone bridge</span><span>Error propagation</span><span>Plate theory</span></div>
+  <div class="hero-img"><img src="../assets/photos/wafer-cleanroom.jpg" alt="The finished sensor wafer, with membrane windows of four sizes, held in a cleanroom glove" width="1050" height="1400" style="max-height:480px"></div>
+</div></header>
+
+<main class="wrap">
+<section>
+  <h2>How it senses pressure</h2>
+  <p>Pressure pushes the membrane, the membrane stretches the NiCr serpentines on it, and stretching a resistor (longer, thinner) raises its resistance. Matched reference resistors sit on the rigid frame, so the bridge only goes out of balance when the membrane flexes. NiCr was chosen for its high resistivity and low temperature coefficient: more signal, less drift.</p>
+  <div class="two">
+    <figure><img src="../assets/cases/sensor-topview.jpg" alt="Top-view schematic: membrane window, NiCr serpentine resistors and contact pads" loading="lazy"><figcaption>Top view I drew: membrane window, NiCr gauges (peach), Cr/Au pads.</figcaption></figure>
+    <figure><img src="../assets/cases/sensor-crosssection.jpg" alt="Cross-section schematics through the KOH cavity and through the contacts" loading="lazy"><figcaption>Cross-sections: KOH cavity under the Si<sub>3</sub>N<sub>4</sub> membrane, and the metal stack.</figcaption></figure>
+  </div>
+  <p>Want to see it move? The <a href="../index.html#v-sensor">interactive 3D model</a> on the main page deflects the membrane with a pressure slider and colors it by stress.</p>
+</section>
+
+<section>
+  <h2>Geometry from crystal planes</h2>
+  <p>KOH etches (100) silicon fast but nearly stops on the {111} planes, which meet the surface at 54.74&deg;. Through a 500 &micro;m wafer, each side of the opening walks inward by 500 / tan 54.74&deg; = 353.6 &micro;m, so the membrane is always 707 &micro;m narrower than the window drawn on the mask.</p>
+  <table>
+    <tr><th>Mask window</th><th>Membrane width</th><th>Serpentine turns</th><th>Effective resistor length</th></tr>
+    <tr><td class="n">8 mm</td><td class="n">7.29 mm</td><td class="n">4</td><td class="n">30.2 mm</td></tr>
+    <tr><td class="n">6 mm</td><td class="n">5.29 mm</td><td class="n">4</td><td class="n">22.2 mm</td></tr>
+    <tr><td class="n">4 mm</td><td class="n">3.29 mm</td><td class="n">6</td><td class="n">21.3 mm</td></tr>
+    <tr><td class="n">2 mm</td><td class="n">1.29 mm</td><td class="n">8</td><td class="n">12.4 mm</td></tr>
+  </table>
+  <p class="muted">Measured resistor lengths came in 0.1 to 0.4% short of design, consistent with slight lithographic bias in the printed gaps.</p>
+</section>
+
+<section>
+  <h2>The thin film is not the bulk metal</h2>
+  <div class="stats">
+    <div class="stat"><b>~35&times;</b><span>measured resistance over the bulk-NiCr prediction</span></div>
+    <div class="stat"><b>&le;16%</b><span>what measurement error could explain</span></div>
+    <div class="stat"><b>44 vs 39 nm</b><span>mean NiCr thickness on two wafers</span></div>
+  </div>
+  <p>Using bulk NiCr resistivity with the measured length, width and thickness predicted resistances about 35 times lower than what the probe station read. Propagating the uncertainty in L, w and t covers at most 16% of that, so geometry error is not the story. In a ~40 nm film, grain-boundary and surface scattering push resistivity far above bulk.</p>
+  <p>Thickness maps across two wafers showed the film thicker at the center (magnetron sputtering concentrates flux there) and deposition rates of 110 and 97.5 &Aring;/min against a nominal 125. Variation within a wafer was larger than between runs, so the process is repeatable but not uniform. Rotating the substrate during sputtering would even it out.</p>
+</section>
+
+<section>
+  <h2>Theory against measurement</h2>
+  <p>Under pressure these membranes bend far more than they are thick, so they behave like stretched drumheads, not stiff plates. In that regime the center deflection goes as w<sub>c</sub> &asymp; 9.21 d<sup>4/3</sup> p<sup>1/3</sup> (&micro;m, with d in mm and p in psi). Even the smallest membrane deflects 12.2 &micro;m at 1 psi, about 13 times its 0.95 &micro;m thickness, which justifies the model.</p>
+  <figure class="dark"><img src="../assets/mems/pressure-response-3d.png" alt="Measured bridge current versus pressure for 42 devices grouped by window size" loading="lazy"><figcaption>Measured bridge current, 42 devices across the class dataset, grouped by window size.</figcaption></figure>
+  <p>The measured currents ran far above the model: for a 2 mm device at 1 psi, about 108 nA measured against roughly 12 nA predicted. My reading of why:</p>
+  <ul class="tight">
+    <li>The model treats strain as uniaxial; a square membrane strains biaxially, so the gauges see more stretch.</li>
+    <li>The curves flatten at higher pressure, the signature of membrane stretching taking over from bending, which the linearized output model does not capture.</li>
+    <li>LPCVD nitride carries built-in tensile stress, and any KOH attack on the gauges through flaws in the protective coating would shift their resistance before testing.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Sensitivity against survival</h2>
+  <table>
+    <tr><th>Membrane</th><th>Device</th><th>Sensitivity</th><th>Note</th></tr>
+    <tr><td>2 mm</td><td class="n">#18</td><td class="n">~76 nA/psi</td><td>Survives to 10 psi</td></tr>
+    <tr><td>4 mm</td><td class="n">#19</td><td class="n">~137 nA/psi</td><td></td></tr>
+    <tr><td>6 mm</td><td class="n">#21</td><td class="n">~190 nA/psi</td><td></td></tr>
+    <tr><td>8 mm</td><td class="n">#11</td><td class="n">~311 nA/psi</td><td>Tested only to 1.8 psi</td></tr>
+  </table>
+  <p>Bigger membranes deflect more, strain the gauges more, and give about four times the signal. The 2 mm membrane gives up sensitivity for strength: lower stress at any pressure keeps it below the fracture limit of the nitride.</p>
+  <div class="callout"><b>Drive voltage is a trade-off too.</b> At 20 V the gauges self-heat (P = I&sup2;R), and NiCr's positive temperature coefficient makes the current drift. At 1.5 V the heating vanishes but the signal sinks toward the noise floor.</div>
+</section>
+
+<section>
+  <h2>Why devices failed</h2>
+  <ul class="tight">
+    <li><b>Incomplete lift-off</b> left NiCr bridging the serpentine lines and shorted the sensor.</li>
+    <li><b>Poor descum</b> before deposition weakens adhesion, so metal peels and the resistor opens.</li>
+    <li><b>The 24-hour, 63&deg;C KOH etch</b> relied only on a fluorocarbon coat this semester; any pinhole let KOH corrode the NiCr and the Au pads.</li>
+    <li><b>Wafer edges</b> got thinner film, so edge devices were more fragile and more likely to fail inspection.</li>
+  </ul>
+</section>
+</main>
+
+<footer><div class="wrap"><span>&copy; 2026 Girish Ravi</span><span><a href="micromixer.html">PDMS micromixer &rarr;</a> &nbsp; <a href="surface-micromachining.html">Process flow &rarr;</a></span></div></footer>
+</body>
+</html>

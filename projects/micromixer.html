@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDMS micromixer | Girish Ravi</title>
+<meta name="description" content="Designing, fabricating and testing a two-layer PDMS microfluidic mixer: slingshot impingement plus an obstacle serpentine, DRIE master mold, ImageJ mixing analysis.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="home" href="../index.html"><span>GR</span> Girish Ravi</a><a href="../index.html#mems">&larr; All MEMS work</a></div></nav>
+
+<header class="case"><div class="wrap">
+  <div class="eyebrow">ME 487 &middot; Design, fab, test</div>
+  <h1>A PDMS micromixer I designed and built</h1>
+  <p class="lede">At micro scale two dyes will not mix on their own: the flow is laminar, so there is no turbulence to stir them. I designed a two-layer PDMS mixer that slingshots the streams into each other, fabricated it from a DRIE-etched silicon master, and measured how well it mixed at five flow rates.</p>
+  <div class="meta"><span>SolidWorks mask layout</span><span>Maskless lithography</span><span>DRIE Bosch etch</span><span>PDMS soft lithography</span><span>ImageJ analysis</span></div>
+  <div class="hero-img"><img src="../assets/photos/pdms-mixer.jpg" alt="The finished PDMS mixer under test with green dye in its channels" width="1050" height="1400" style="max-height:460px"></div>
+</div></header>
+
+<main class="wrap">
+<section>
+  <h2>The design idea</h2>
+  <p>I had read about mixers where the fluid loops around itself, so I tried a stronger version: send each stream around a curve and crash them head-on in an impingement region, stretching and folding the interface between them. In case that idea underperformed, I added an obstacle-lined serpentine after it as a backup. The bottom mold carries the channels; the top mold carries the inlets, outlet and alignment features.</p>
+  <div class="two">
+    <figure><img src="../assets/cases/mixer-mold-bottom.jpg" alt="SolidWorks drawing of the bottom mold with the slingshot region and serpentine channel" loading="lazy"><figcaption>Bottom mold: inlets, slingshot region and serpentine.</figcaption></figure>
+    <figure><img src="../assets/cases/mixer-mold-top.jpg" alt="SolidWorks drawing of the top mold with ports and obstacle features" loading="lazy"><figcaption>Top mold: ports and rectangular flow obstacles.</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>How the mold was made</h2>
+  <p>The channels are cast in PDMS from a silicon master. Step through the master fabrication below (cross-section X-X&prime;, not to scale).</p>
+  <div class="stepper" id="mixer-stepper" tabindex="0">
+    <svg viewBox="4 8 92 30" role="img" aria-label="Cross-section of the silicon master at the current process step"></svg>
+    <div class="st-body"><div class="st-head"><span class="num"></span><span class="st-title"></span></div><p class="st-detail"></p><p class="st-why"></p><div class="legend"></div></div>
+    <div class="st-nav"><button class="prev">&larr; Back</button><div class="dots"></div><button class="next">Next &rarr;</button></div>
+  </div>
+</section>
+
+<section>
+  <h2>Why mixing is hard here</h2>
+  <p>For a 200 &times; 150 &micro;m channel of water, the Reynolds number based on hydraulic diameter stays far below the turbulent threshold at every flow rate I tested. Mixing has to come from diffusion across the interface, which the bends and the impingement try to speed up by stretching it.</p>
+  <table>
+    <tr><th>Flow rate</th><th>Mean velocity</th><th>Re (hydraulic dia.)</th><th>Regime</th></tr>
+    <tr><td class="n">5 &micro;L/min</td><td class="n">2.8 mm/s</td><td class="n">0.53</td><td>Laminar</td></tr>
+    <tr><td class="n">50 &micro;L/min</td><td class="n">27.8 mm/s</td><td class="n">5.3</td><td>Laminar</td></tr>
+    <tr><td class="n">500 &micro;L/min</td><td class="n">0.28 m/s</td><td class="n">53</td><td>Laminar</td></tr>
+    <tr><td class="n">1 mL/min</td><td class="n">0.56 m/s</td><td class="n">107</td><td>Laminar</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>What the outlet looked like</h2>
+  <p>Microscope images of the outlet channel at each flow rate. I measured a line profile across the channel in ImageJ and used its spread as a mixing metric: a flat profile means the dyes are evenly mixed.</p>
+  <div class="strip">
+    <figure><img src="../assets/cases/outlet-0p005.jpg" alt="Outlet at 0.005 mL/min" loading="lazy"><figcaption>0.005</figcaption></figure>
+    <figure><img src="../assets/cases/outlet-0p05.jpg" alt="Outlet at 0.05 mL/min" loading="lazy"><figcaption>0.05</figcaption></figure>
+    <figure><img src="../assets/cases/outlet-0p25.jpg" alt="Outlet at 0.25 mL/min" loading="lazy"><figcaption>0.25</figcaption></figure>
+    <figure><img src="../assets/cases/outlet-0p5.jpg" alt="Outlet at 0.5 mL/min" loading="lazy"><figcaption>0.5</figcaption></figure>
+    <figure><img src="../assets/cases/outlet-1p0.jpg" alt="Outlet at 1.0 mL/min" loading="lazy"><figcaption>1.0 mL/min</figcaption></figure>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>0.25 mL/min</b><span>best mixing (&sigma; = 15.3, mixing index 0.42)</span></div>
+    <div class="stat"><b>1.0 mL/min</b><span>worst: streams stayed segregated (&sigma; = 26.2)</span></div>
+  </div>
+  <figure class="dark"><img src="../assets/mems/micromixer-profiles-3d.png" alt="3D waterfall of outlet intensity profiles at five flow rates for my design and the TA reference design" loading="lazy"><figcaption>Outlet intensity profiles, my design against the TA's standard serpentine. Numbers in brackets are &sigma;/mean of the raw gray value.</figcaption></figure>
+  <div class="callout"><b>Reading this honestly.</b> On the raw mixing index my design scored higher than the TA reference at every rate, but the two image sets differ in brightness, which inflates that gap. Re-run on normalized profiles, my mixer was clearly best at 0.25 mL/min, the designs were similar elsewhere, and the TA design was slightly better at 1.0 mL/min. The fair conclusion: mine helps at intermediate flow; the reference is more consistent.</div>
+  <p>The peak at 0.25 mL/min fits the physics: slow enough for diffusion to act during the residence time, fast enough for the impingement to fold the interface.</p>
+</section>
+
+<section>
+  <h2>What I would change</h2>
+  <ul class="tight">
+    <li><b>Bonding.</b> The two PDMS halves leaked at the seam; at 1 mL/min I had to hold them together. A plasma-activated bond would fix the seal and make higher flow rates testable.</li>
+    <li><b>Symmetry.</b> The blue stream had a longer path to the mixing region than the other, so the streams arrived unbalanced. Equal inlet path lengths would let the slingshot work as designed.</li>
+    <li><b>Measurement.</b> Calibrate pixel intensity against known dye concentrations, average over a region instead of one pixel row, and profile several cross-sections along the channel to see where mixing actually happens.</li>
+  </ul>
+</section>
+</main>
+
+<footer><div class="wrap"><span>&copy; 2026 Girish Ravi</span><span><a href="pressure-sensor.html">Pressure sensor &rarr;</a> &nbsp; <a href="surface-micromachining.html">Process flow &rarr;</a></span></div></footer>
+
+<script type="module">
+import { mountStepper } from './stepper.js';
+const T = [[20, 30], [45, 55], [70, 80]], C = [[4, 20], [30, 45], [55, 70], [80, 96]];
+const ETCH = { etch: T, d: 6 }, AP = { m: 'ap', t: 0.5, at: C }, PR = { m: 'pr', t: 3, at: C };
+mountStepper(document.getElementById('mixer-stepper'), [
+  { title: 'Spin AP8000 and SPR-220, soft bake', ops: [{ m: 'ap', t: 0.5 }, { m: 'pr', t: 3 }], detail: 'Adhesion promoter first, then thick positive resist.' },
+  { title: 'Maskless lithography', ops: [{ m: 'ap', t: 0.5 }, { m: 'pr', t: 3, at: C }, { m: 'prx', t: 3, at: T }], detail: 'UV writes my channel layout straight from the design file; exposed resist (light) becomes soluble.', why: 'No physical mask needed, so a custom design costs nothing extra to try.' },
+  { title: 'Develop in 917 MIF', ops: [{ m: 'ap', t: 0.5 }, PR], detail: 'Exposed resist dissolves; the rest becomes the etch mask.' },
+  { title: 'O₂ descum', ops: [{ m: 'ap', t: 0.5 }, PR], detail: 'Oxygen plasma clears resist scum from the openings before etching.', why: 'Leftover scum micromasks the DRIE and roughens the trench floor.' },
+  { title: 'DRIE Bosch etch, ~150 to 180 µm', ops: [ETCH, AP, PR], detail: 'Alternating SF₆ etch and passivation cycles cut deep trenches with near-vertical walls.', why: 'Deep, straight walls give well-defined channels and a durable, reusable master.' },
+  { title: 'C₄F₈ anti-stiction coat', ops: [ETCH, AP, PR, { m: 'ptfe', t: 0.5 }], detail: 'A Teflon-like film over every surface, trench walls included.', why: 'Cured PDMS peels off cleanly, so the master can be cast again and again.' },
+  { title: 'Cast PDMS and cure', ops: [ETCH, AP, PR, { m: 'ptfe', t: 0.5 }, { m: 'pdms', fill: 21 }], detail: 'Degassed Sylgard 184 poured over the master, cured about a week at room temperature.', why: 'Heat would cure it in 35 min at 100°C, but the wax dam around the wafer would melt.' },
+  { title: 'Demold the replica', flip: true, only: ['pdms'], ops: [ETCH, AP, PR, { m: 'ptfe', t: 0.5 }, { m: 'pdms', fill: 21 }], detail: 'Peel, cut out the device, punch ports, and bond the two molded halves to close the channels.', why: 'The replica is the inverse of the master: every trench becomes a feature in the PDMS.' },
+]);
+</script>
+</body>
+</html>

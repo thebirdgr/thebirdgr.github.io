@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surface micromachining a poly-Si bridge | Girish Ravi</title>
+<meta name="description" content="A 29-step surface-micromachining process for a suspended poly-Si bridge over Al electrodes, with the etch-selectivity reasoning behind every step.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="home" href="../index.html"><span>GR</span> Girish Ravi</a><a href="../index.html#mems">&larr; All MEMS work</a></div></nav>
+
+<header class="case"><div class="wrap">
+  <div class="eyebrow">ME 487 &middot; Process design</div>
+  <h1>Surface micromachining a suspended poly-Si bridge</h1>
+  <p class="lede">I wrote a full process flow, 29 steps across four masks, for a 1 &micro;m poly-Si bridge hanging 100 nm above an Al electrode coated in Si<sub>3</sub>N<sub>4</sub>. The hard part is not the deposition. It is choosing every etch so it removes one layer and leaves the others alone.</p>
+  <div class="meta"><span>4 masks</span><span>EVG 620 lithography</span><span>PECVD &middot; LPCVD &middot; DC sputter</span><span>RIE &middot; wet HF release</span><span>Supercritical CO&#8322; dry</span></div>
+  <div class="hero-img"><img src="../assets/photos/process-flow-whiteboard.jpg" alt="Whiteboard with the hand-drawn process flow for this device" width="1400" height="1050"></div>
+</div></header>
+
+<main class="wrap">
+<section>
+  <h2>The device, layer by layer</h2>
+  <div class="stats">
+    <div class="stat"><b>2000 &Aring;</b><span>Al electrodes (lift-off)</span></div>
+    <div class="stat"><b>500 &Aring;</b><span>Si<sub>3</sub>N<sub>4</sub> dielectric (PECVD)</span></div>
+    <div class="stat"><b>1000 &Aring;</b><span>PSG sacrificial gap</span></div>
+    <div class="stat"><b>1 &micro;m</b><span>Poly-Si bridge (LPCVD)</span></div>
+  </div>
+  <p>Step through the flow below. Each frame is the X-X&prime; cross-section after that step, with the reason the step is done that way. Thin films are drawn thicker than scale so every layer stays visible.</p>
+  <div class="stepper" id="fab-stepper" tabindex="0">
+    <svg viewBox="8 21 84 13" role="img" aria-label="Cross-section of the device at the current process step"></svg>
+    <div class="st-body"><div class="st-head"><span class="num"></span><span class="st-title"></span></div><p class="st-detail"></p><p class="st-why"></p><div class="legend"></div></div>
+    <div class="st-nav"><button class="prev">&larr; Back</button><div class="dots"></div><button class="next">Next &rarr;</button></div>
+  </div>
+</section>
+
+<section>
+  <h2>The decisions that make it work</h2>
+  <ul class="tight">
+    <li><b>PECVD nitride, not LPCVD.</b> LPCVD nitride runs near 835&deg;C, which would destroy the Al underneath. PECVD at 300&deg;C keeps the metal intact.</li>
+    <li><b>Wet HF for the PSG pattern.</b> A CF<sub>4</sub>/CHF<sub>3</sub> plasma would chew through the 500 &Aring; nitride at about 1900 &Aring;/min. 10:1 HF etches Al at zero and nitride at about 3 &Aring;/min, so a 13 s dip patterns the oxide and leaves the dielectric. The mask is oversized 100 nm per side to absorb the isotropic undercut.</li>
+    <li><b>HBr + Cl<sub>2</sub> for the bridge.</b> SF<sub>6</sub>/He would eat the PSG at 530 &Aring;/min and expose the Al. HBr + Cl<sub>2</sub> does not touch PSG at all, a perfect etch stop under the poly.</li>
+    <li><b>Poly-Si at 580&deg;C.</b> The bottom of the LPCVD window, chosen to protect the Al. At 60 &Aring;/min, 1 &micro;m takes about 2.8 hours.</li>
+    <li><b>25:1 HF release, then supercritical CO<sub>2</sub>.</b> 25:1 HF leaves Al and poly-Si untouched. Rinsing and air drying would let water's surface tension pull the bridge down across the 100 nm gap for good, so the drying step skips the liquid-gas interface entirely.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Thickness budget</h2>
+  <table>
+    <tr><th>Layer</th><th>Deposited</th><th>Losses</th><th>Final</th></tr>
+    <tr><td>Al</td><td class="n">2150 &Aring;</td><td>~150 &Aring; budgeted for the PSG wet etch</td><td class="n">~2000 &Aring;</td></tr>
+    <tr><td>Si<sub>3</sub>N<sub>4</sub></td><td class="n">500 &Aring;</td><td>~2 &Aring; in 25:1 HF</td><td class="n">~498 &Aring;</td></tr>
+    <tr><td>PSG</td><td class="n">1000 &Aring;</td><td>fully removed at release</td><td class="n">0 (air gap ~1000 &Aring;)</td></tr>
+    <tr><td>Poly-Si</td><td class="n">10000 &Aring;</td><td>none (HF does not etch it)</td><td class="n">~10000 &Aring;</td></tr>
+  </table>
+</section>
+</main>
+
+<footer><div class="wrap"><span>&copy; 2026 Girish Ravi</span><span><a href="micromixer.html">PDMS micromixer &rarr;</a> &nbsp; <a href="pressure-sensor.html">Pressure sensor &rarr;</a></span></div></footer>
+
+<script type="module">
+import { mountStepper } from './stepper.js';
+const PADS = [[12, 26], [43, 57], [74, 88]], OPEN = [[4, 12], [26, 43], [57, 74], [88, 96]];
+const AL = { m: 'al', t: 1.2, at: PADS }, SIN = { m: 'sin', t: 0.8, at: [[41, 59]] }, PSG = { m: 'psg', t: 1.8, at: [[33, 67]] };
+mountStepper(document.getElementById('fab-stepper'), [
+  { title: 'Clean and prime the wafer', ops: [], detail: 'Degrease (acetone, IPA, DI water, IPA, N₂ dry), O₂ plasma descum, then spin AP-8000 adhesion promoter.' , why: 'Organic residue is the usual cause of resist and metal peeling later.' },
+  { title: 'Spin SPR220-7 and soft bake', ops: [{ m: 'pr', t: 3 }], detail: '3000 rpm, then 2 min at 60°C and 1 min at 110°C.' },
+  { title: 'Expose Mask #1 and develop', ops: [{ m: 'pr', t: 3, at: OPEN }], detail: 'EVG 620 contact aligner at 365 nm, develop in AZ400K (5:1) for 2 to 3 min, DI quench, inspect for sharp edges.', why: 'Openings sit exactly where the electrodes go: this is a lift-off mask.' },
+  { title: 'Sputter 2150 Å of Al', ops: [{ m: 'pr', t: 3, at: OPEN }, { m: 'al', t: 1.2 }], detail: '8-gun DC sputter, 400 W in Ar, about 134 Å/min for 16 min.', why: 'Targeting 2150 Å instead of 2000 Å budgets for ~150 Å lost in the later PSG wet etch.' },
+  { title: 'Lift off', ops: [AL], detail: '1165 stripper in ultrasound for 10+ min, then acetone and IPA ultrasound and a DI rinse.', why: 'Metal on top of the resist leaves with it; only the three electrodes stay.' },
+  { title: 'PECVD 500 Å Si₃N₄ at 300°C', ops: [AL, { m: 'sin', t: 0.8 }], detail: 'SiH₄ + NH₃ + N₂ on the PlasmaTherm, about 100 Å/min for 5 min.', why: 'LPCVD nitride runs near 835°C and would destroy the aluminum.' },
+  { title: 'Pattern the dielectric (Mask #2)', ops: [AL, SIN], detail: 'SPR220-3, 200 mJ/cm², develop, then SF₆ + He RIE for about 33 s (550 Å with 10% overetch). Strip resist.', why: 'SF₆/He etches nitride at ~1000 Å/min with negligible attack on Al.' },
+  { title: 'PECVD 1000 Å PSG sacrificial layer', ops: [AL, SIN, { m: 'psg', t: 1.8 }], detail: 'SiH₄ + O₂ + PH₃ at 300°C. This thickness becomes the air gap.' },
+  { title: 'Pattern the PSG (Mask #3) in 10:1 HF', ops: [AL, SIN, PSG], detail: 'Resist over the electrode stack, mask oversized 100 nm per side, 10:1 HF for about 13 s, immediate DI quench.', why: 'Plasma would destroy the 500 Å nitride; 10:1 HF etches Al at 0 and nitride at ~3 Å/min.' },
+  { title: 'LPCVD 1 µm poly-Si at 580°C', ops: [AL, SIN, PSG, { m: 'poly', t: 1.5 }], detail: 'SiH₄, 300 to 600 mTorr, about 60 Å/min for ~2.8 hours.', why: '580°C is the bottom of the LPCVD window, chosen to protect the Al.' },
+  { title: 'Pattern the bridge (Mask #4)', ops: [AL, SIN, PSG, { m: 'poly', t: 1.5, at: [[17, 83]] }], detail: 'HBr + Cl₂ RIE on Lam 4 (200 W, 300 mTorr), about 24 min for 1.1 µm. Strip resist.', why: 'SF₆/He would eat the PSG; HBr + Cl₂ stops dead on it.' },
+  { title: 'Release in 25:1 HF, dry with supercritical CO₂', ops: [AL, SIN, { ...PSG, hide: true }, { m: 'poly', t: 1.5, at: [[17, 83]] }], detail: 'PSG etches at ~1500 Å/min; release holes in the bridge shorten the lateral soak.', why: 'Air drying would let surface tension pull the bridge down across the 100 nm gap (stiction).' },
+]);
+</script>
+</body>
+</html>

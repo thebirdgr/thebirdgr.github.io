@@ -129,6 +129,18 @@ h2{font-size:clamp(26px,3.4vw,36px);margin:0;letter-spacing:-.01em}
 .card a.more:hover{text-decoration:underline}
 .card.wide{grid-column:1 / -1}
 
+/* case study cards */
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:22px}
+@media (max-width:900px){ .cases{grid-template-columns:minmax(0,1fr)} }
+.case{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,transform .2s}
+.case:hover{border-color:var(--accent);transform:translateY(-2px)}
+.case img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.case div{padding:16px 18px 18px}
+.case .kind{font:12px var(--mono);color:var(--accent2);text-transform:uppercase;letter-spacing:.06em}
+.case h3{margin:6px 0 6px;font-size:18px}
+.case p{margin:0;color:var(--muted);font-size:15px}
+@media (max-width:900px){ .case{flex-direction:row} .case img{width:38%;aspect-ratio:auto;height:auto;object-fit:cover} }
+
 /* MEMS figures */
 .figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 @media (max-width:820px){ .figs{grid-template-columns:minmax(0,1fr)} }
@@ -365,9 +377,14 @@ footer{padding:30px 0;color:var(--dim);font-size:13px;text-align:center;border-t
 <section id="mems">
   <div class="wrap">
     <div class="sh"><h2><span class="num">03</span>MEMS, visualized</h2><p>ME 487 coursework rebuilt in MATLAB from my lab data. Real measurements where it says measured; schematics where it says schematic.</p></div>
+    <div class="cases">
+      <a class="case" href="projects/pressure-sensor.html"><img src="assets/photos/wafer-cleanroom.jpg" alt="" loading="lazy"><div><span class="kind">Case study</span><h3>Si<sub>3</sub>N<sub>4</sub> membrane pressure sensors</h3><p>KOH geometry, a 35&times; thin-film resistivity surprise, and where plate theory breaks.</p></div></a>
+      <a class="case" href="projects/micromixer.html"><img src="assets/photos/pdms-mixer.jpg" alt="" loading="lazy"><div><span class="kind">Case study</span><h3>A PDMS micromixer I designed</h3><p>Slingshot impingement, a DRIE master, and an honest mixing analysis at five flow rates.</p></div></a>
+      <a class="case" href="projects/surface-micromachining.html"><img src="assets/photos/process-flow-whiteboard.jpg" alt="" loading="lazy"><div><span class="kind">Process flow</span><h3>Surface micromachining a poly-Si bridge</h3><p>29 steps, 4 masks, and the etch selectivity behind each one. Click through it.</p></div></a>
+    </div>
     <div class="figs">
       <figure class="fig wide"><a href="assets/mems/pressure-response-3d.png"><img src="assets/mems/pressure-response-3d.png" alt="3D plot of measured bridge current versus pressure for 42 piezoresistive sensors, grouped by membrane window size" loading="lazy" width="1762" height="1043"></a>
-        <figcaption><b>Measured:</b> 42 Si<sub>3</sub>N<sub>4</sub> membrane pressure sensors. Low-pressure sensitivity climbs from 66 nA/psi (2 mm window) to 293 nA/psi (8 mm), as plate theory predicts for larger, more compliant membranes.</figcaption></figure>
+        <figcaption><b>Measured:</b> 42 Si<sub>3</sub>N<sub>4</sub> membrane pressure sensors from the class lab dataset. Low-pressure sensitivity climbs from 66 nA/psi (2 mm window) to 293 nA/psi (8 mm), as plate theory predicts for larger, more compliant membranes.</figcaption></figure>
       <figure class="fig viewer" id="v-sensor">
         <div class="stage" role="img" aria-label="Interactive 3D cutaway of a piezoresistive pressure sensor: KOH-etched silicon die, silicon nitride membrane colored by bending stress, NiCr serpentine resistors"><div class="labels"></div><div class="hint">drag to rotate</div></div>
         <div class="ctrl"><label for="p-slider">Backside pressure</label><input id="p-slider" type="range" min="0" max="10" step="0.1" value="7"><output>7.0 psi</output></div>
@@ -391,9 +408,9 @@ footer{padding:30px 0;color:var(--dim);font-size:13px;text-align:center;border-t
     <div class="gallery">
       <figure><img src="assets/photos/kuka-platform.jpg" alt="Girish operating a KUKA arm on a yellow mobile platform with a hand-held controller" loading="lazy" width="1050" height="1400"><figcaption>Driving a KUKA arm on a mobile platform from its hand-held controller</figcaption></figure>
       <figure><img src="assets/photos/robomaster.jpg" alt="Girish with a RoboMaster competition robot with mecanum wheels" loading="lazy" width="1050" height="1400"><figcaption>RoboMaster competition robot: mecanum drive and gimbal turret</figcaption></figure>
-      <figure><img src="assets/photos/wafer-cleanroom.jpg" alt="Patterned silicon wafer held in a cleanroom glove" loading="lazy" width="1050" height="1400"><figcaption>Patterned wafer out of the UIUC cleanroom</figcaption></figure>
+      <figure><img src="assets/photos/wafer-cleanroom.jpg" alt="Patterned silicon wafer held in a cleanroom glove" loading="lazy" width="1050" height="1400"><figcaption>My pressure-sensor wafer: KOH-etched membranes in four window sizes</figcaption></figure>
       <figure><img src="assets/photos/pdms-mixer.jpg" alt="PDMS microfluidic mixer with fluorescent dye under test" loading="lazy" width="1050" height="1400"><figcaption>My PDMS micromixer under test with fluorescent dye</figcaption></figure>
-      <figure class="span2"><img src="assets/photos/process-flow-whiteboard.jpg" alt="Whiteboard with a MEMS surface-micromachining process flow" loading="lazy" width="1400" height="1050"><figcaption>Planning a surface-micromachining flow: Al electrode, Si<sub>3</sub>N<sub>4</sub> dielectric, PSG sacrificial layer, poly-Si bridge, BHF release</figcaption></figure>
+      <figure class="span2"><img src="assets/photos/process-flow-whiteboard.jpg" alt="Whiteboard with a MEMS surface-micromachining process flow" loading="lazy" width="1400" height="1050"><figcaption>Working out a surface-micromachining flow: Al electrodes, Si<sub>3</sub>N<sub>4</sub> dielectric, PSG sacrificial layer, poly-Si bridge, HF release</figcaption></figure>
     </div>
   </div>
 </section>
